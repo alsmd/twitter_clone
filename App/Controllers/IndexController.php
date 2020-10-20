@@ -22,10 +22,15 @@ class IndexController extends Action{
         $user->__set('email',$_POST['email']);
         $user->__set('password',$_POST['password']); 
 
-        $user->save();
-        //success
-        
-        //error
+        //if user doesn't exist
+        if(count($user->getUserByEmail()) == 0){
+            //success
+            $user->save();
+            $this->render('register','layout');
+        }else{
+            //error
+            $this->render('register_erro','layout');
+        }
     }
     
 

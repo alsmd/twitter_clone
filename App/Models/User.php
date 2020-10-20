@@ -28,7 +28,6 @@
                 $stmt->bindValue(':_password',$this->__get('password')); //md5 hash 32 caracteres
                 if($this->validateRegister()){
                     $stmt->execute();
-                    echo 'cadastro';
                 }else{
                     echo 'falho';
                 }
@@ -50,9 +49,15 @@
             if(strlen($this->__get('name')) < 3 || strlen($email ) < 3 || strlen($this->__get('password')) < 3 ){
                 $acess = false;
             }
-
             return $acess;
         }
-        //recuperar um usuario por email
+        //get user by email
+        public function getUserByEmail(){
+            $query = "SELECT * FROM users WHERE _email = :email";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(":email", $this->__get('email'));
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
     }
 ?>
