@@ -19,6 +19,12 @@ class Route extends Bootstrap {
             'controller' => 'IndexController',
             'action' => 'inscreverse'
         );
+
+        $routes['register']= array(
+            'route' => '/register',
+            'controller' => 'IndexController',
+            'action' => 'register'
+        );
         parent::setRoutes($routes);
     }
 }

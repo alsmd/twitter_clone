@@ -7,14 +7,14 @@
 
 
         public function __construct(){
-            $this->view = new \stdClass(); //criaremos um obj vazio, para que seus atributo sejam construidos ao longo do processamento da nossa aplicação
+            $this->view = new \stdClass(); // an empty obj
         }
 
-        protected function render($page,$layout){
+        protected function render($page,$layout = ''){
             $this->view->page = $page;
 
             if(file_exists("../App/Views/".$layout.".phtml")){
-                //renderiza nosso layout, que por sua vez ira renderizar a pagina solicitada
+                //render the layout that render the content
                 require_once "../App/Views/".$layout.".phtml";
             }else{
                 $this->content();
@@ -23,12 +23,12 @@
         }
 
         protected function content(){
-            //recupera o primeiro nome da class atual
+            //get the Class's name
             $classAtual = get_class($this);
             $classAtual = str_replace("App\\Controllers\\",'',$classAtual);
             $classAtual = strtolower(str_replace("Controller","",$classAtual));
     
-            require_once "../App/Views/$classAtual /".$this->view->page.".phtml";
+            require_once "../App/Views/$classAtual/".$this->view->page.".phtml";
         }
         
     }
