@@ -10,7 +10,7 @@
             $this->view = new \stdClass(); // an empty obj
         }
 
-        protected function render($page,$layout = ''){
+        protected function render($page,$layout = 'layout'){
             $this->view->page = $page;
 
             if(file_exists("../App/Views/".$layout.".phtml")){

@@ -12,6 +12,13 @@ class IndexController extends Action{
         $this->render('index','layout');
     }
     public function inscreverse(){
+        $this->view->user = array(
+            'name' => '',
+            'email' => '',
+            'password' => ''
+
+        );
+        $this->view->erroRegister = false;
         $this->render('inscreverse','layout');
     }
 
@@ -22,14 +29,28 @@ class IndexController extends Action{
         $user->__set('email',$_POST['email']);
         $user->__set('password',$_POST['password']); 
 
-        //if user doesn't exist
-        if(count($user->getUserByEmail()) == 0){
-            //success
-            $user->save();
-            $this->render('register','layout');
+        //if the fields are correct
+        if($user->validateRegister()){
+            //if user doesn't alredy exist
+            if(count($user->getUserByEmail()) == 0){
+                //success
+                $user->save();
+                $this->render('register');
+            }else{
+                //user does alredy exist
+                $this->render('email_alredy_exists');
+            }
+
         }else{
-            //error
-            $this->render('register_erro','layout');
+            //error if any of the fields are incorrect
+            $this->view->user = array(
+                'name' => $_POST['name'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password']
+
+            );
+            $this->view->erroRegister = true;
+            $this->render('inscreverse');
         }
     }
     

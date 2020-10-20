@@ -26,11 +26,8 @@
                 $stmt->bindValue(':_name',$this->__get('name'));
                 $stmt->bindValue(':_email',$this->__get('email'));
                 $stmt->bindValue(':_password',$this->__get('password')); //md5 hash 32 caracteres
-                if($this->validateRegister()){
-                    $stmt->execute();
-                }else{
-                    echo 'falho';
-                }
+                $stmt->execute();
+
                 return $this;
             }catch(\PDOException $e){
                 echo 'Moio, deu erro';
