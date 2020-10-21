@@ -28,7 +28,9 @@ class IndexController extends Action{
         $user = Container::getModel('User');
         $user->__set('name',$_POST['name']);
         $user->__set('email',$_POST['email']);
-        $user->__set('password',$_POST['password']); 
+        if($_POST['password'] != ''){
+            $user->__set('password',md5()); 
+        }
 
         //if the fields are correct
         if($user->validateRegister()){
@@ -44,6 +46,7 @@ class IndexController extends Action{
 
         }else{
             //error if any of the fields are incorrect
+            //this array will be use to auto-fill the fields
             $this->view->user = array(
                 'name' => $_POST['name'],
                 'email' => $_POST['email'],
