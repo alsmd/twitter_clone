@@ -29,12 +29,7 @@ class AppController extends Action{
         $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
         $tweet->save();
         header("Location: /timeline");
-    }
-    public function delete_tweet(){
-        
-    }
-
-
+    }   
 }
 
 ?>

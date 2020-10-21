@@ -1,3 +1,25 @@
+<script>
+	
+	$(document).ready(()=>{
+		$("#tweets").on("click",".button-remove",(e)=>{
+			//get the id of the tweet that was clicked
+			tweet_id = $(e.target).closest('button').attr('id');
+			tweet = $(e.target).closest('.tweet');
+			//and do a request to delete_tweet that will delete it from the db
+			$.ajax({
+				type:'POST',
+				url:'php/delete_tweet.php',
+				data: 'tweet_id='+tweet_id,
+				success: (e)=>{console.log(e); tweet.remove();}, //if the request is sucess i'll delete the tweet from the timeline with jquery
+				error: ()=>{console.log('nao foi')},
+			})
+			
+		})
+	})
+
+	
+
+</script>
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
