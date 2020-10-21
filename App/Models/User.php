@@ -61,12 +61,18 @@
 
         public function authUser(){
             try{
-                $query = "SELECT _name ,id FROM users WHERE _email = :_email AND _password = :_password";
+                $query = "SELECT _name ,id,_email FROM users WHERE _email = :_email AND _password = :_password";
                 $stmt = $this->db->prepare($query);
                 $stmt->bindValue(":_email",$this->__get("email"));
                 $stmt->bindValue(":_password",$this->__get("password"));
                 $stmt->execute();
-                return $stmt->fetch(\PDO::FETCH_OBJ);
+                $user = $stmt->fetch(\PDO::FETCH_OBJ);
+                //if the user exists in db we'll set this obj's attrs 
+                if(is_object($user) && $user->id != '' && $user->_name != '' ){
+                    $this->__set('id',$user->id);
+                    $this->__set('name',$user->_name);
+                }
+                return $this;
             }catch(\PDOException $e){
                 echo $e->getMessage();
             }
