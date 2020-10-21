@@ -16,6 +16,10 @@ class AppController extends Action{
     }
     public function timeline(){
         $this->isLogged();
+        //Getting all the tweets
+        $tweet =  Container::getModel('tweet');
+        $tweet->__set('id_user',$_SESSION['id']);
+        $this->view->tweets = $tweet->getAll();
         $this->render('timeline');
     }
     public function tweet(){
@@ -24,6 +28,10 @@ class AppController extends Action{
         $tweet->__set("tweet",$_POST['tweet']);
         $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
         $tweet->save();
+        header("Location: /timeline");
+    }
+    public function delete_tweet(){
+        
     }
 
 

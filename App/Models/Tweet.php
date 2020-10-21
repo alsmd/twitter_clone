@@ -31,6 +31,24 @@
             }
         }
 
-        //get
+        //get All
+
+        public function getAll(){
+            $query = "SELECT
+
+             t.id,t.id_user, t.tweet,u._name, t.date
+
+             FROM 
+             tweets as t LEFT JOIN users as u ON(t.id_user = u.id)
+             WHERE
+             t.id_user = :id_user
+             ORDER BY
+             t.date DESC
+             ";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(":id_user", $this->id_user);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        }
     }
 ?>
