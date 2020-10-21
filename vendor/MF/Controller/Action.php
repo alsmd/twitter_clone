@@ -8,6 +8,7 @@
 
         public function __construct(){
             $this->view = new \stdClass(); // an empty obj
+            session_start();
         }
 
         protected function render($page,$layout = 'layout'){

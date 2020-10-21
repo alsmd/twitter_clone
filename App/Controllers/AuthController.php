@@ -5,7 +5,7 @@ namespace App\Controllers;
 
 use MF\Controller\Action;
 use MF\Model\Container;
-class AuthController{
+class AuthController extends Action{
 
 
     public function authenticate(){
@@ -16,7 +16,6 @@ class AuthController{
         //if id and name is diferent of ''(null,false) it means that there is a register of this user in my db
         //so the auth is true
         if($user->__get('id') != '' && $user->__get('name') != ''  ){
-            session_start();
             $_SESSION['id'] = $user->__get("id");
             $_SESSION['name'] = $user->__get("name");
             header('Location: /timeline');
@@ -26,7 +25,8 @@ class AuthController{
         }
     }
     public function logoff(){
-
+        session_destroy();
+        header('Location: /');
     }
 
 }
