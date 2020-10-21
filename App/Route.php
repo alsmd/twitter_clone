@@ -25,6 +25,21 @@ class Route extends Bootstrap {
             'controller' => 'IndexController',
             'action' => 'register'
         );
+        $routes['timeline']= array(
+            'route' => '/timeline',
+            'controller' => 'AppController',
+            'action' => 'timeline'
+        );
+        $routes['authenticate']= array(
+            'route' => '/authenticate',
+            'controller' => 'AuthController',
+            'action' => 'authenticate'
+        );
+        $routes['logoff']= array(
+            'route' => '/logoff',
+            'controller' => 'AuthController',
+            'action' => 'logoff'
+        );
         parent::setRoutes($routes);
     }
 }

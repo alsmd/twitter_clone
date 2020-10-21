@@ -56,5 +56,21 @@
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
+
+        //authenticate
+
+        public function authUser(){
+            try{
+                $query = "SELECT _name ,id FROM users WHERE _email = :_email AND _password = :_password";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(":_email",$this->__get("email"));
+                $stmt->bindValue(":_password",$this->__get("password"));
+                $stmt->execute();
+                return $stmt->fetch(\PDO::FETCH_OBJ);
+            }catch(\PDOException $e){
+                echo $e->getMessage();
+            }
+           
+        }
     }
 ?>
