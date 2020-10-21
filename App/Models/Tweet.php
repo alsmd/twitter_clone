@@ -36,7 +36,7 @@
         public function getAll(){
             $query = "SELECT
 
-             t.id,t.id_user, t.tweet,u._name, t.date
+             t.id,t.id_user, t.tweet,u._name, DATE_FORMAT(t.date,'%d/%m/%Y %H:%i') as date
 
              FROM 
              tweets as t LEFT JOIN users as u ON(t.id_user = u.id)

@@ -1,20 +1,35 @@
 <script>
-	
+	let tweet_id;
+	let tweet;
+	//delete tweet
 	$(document).ready(()=>{
 		$("#tweets").on("click",".button-remove",(e)=>{
+			$(".modal").slideToggle(100);
 			//get the id of the tweet that was clicked
 			tweet_id = $(e.target).closest('button').attr('id');
 			tweet = $(e.target).closest('.tweet');
-			//and do a request to delete_tweet that will delete it from the db
+		})
+		$("#del_yes").on("click",()=>{
+			//and do a request to delete_tweet that will delete it from the db, just when the model "Yes" be clicked
 			$.ajax({
 				type:'POST',
 				url:'php/delete_tweet.php',
 				data: 'tweet_id='+tweet_id,
-				success: (e)=>{console.log(e); tweet.remove();}, //if the request is sucess i'll delete the tweet from the timeline with jquery
+				success: (e)=>{
+					tweet.remove();
+				}, //if the request is sucess i'll delete the tweet from the timeline with jquery
 				error: ()=>{console.log('nao foi')},
 			})
-			
+			$(".modal").slideToggle(100);
 		})
+		//Close the modal
+		$("#del_no").on("click",()=>{
+			$(".modal").slideToggle(100);
+		})
+		$(".close").on("click",()=>{
+			$(".modal").slideToggle(100);
+		})
+		
 	})
 
 	
@@ -95,7 +110,7 @@
 			<?php foreach($this->view->tweets AS $tweet){ ?>
 			<div class="row tweet">
 				<div class="col">
-					<p><strong><?=  $tweet->_name ?></strong> <span class="text text-muted">- <?=  $tweet->date ?></span></p>
+					<p><strong><?=  $tweet->_name ?></strong> <span class="text text-muted">-<small> <?=  $tweet->date ?> </small> </span></p>
 					<p><?=  $tweet->tweet ?></p>
 
 					<br />
@@ -124,4 +139,24 @@
 		</div>
 
 	</div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="model">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Exluir</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Deseja realmente excluir esse tweet?.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="del_yes">Sim</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="del_no">Voltar</button>
+      </div>
+    </div>
+  </div>
 </div>

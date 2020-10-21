@@ -10,7 +10,7 @@ class AppController extends Action{
 
     public function isLogged(){
         //if the user isn't logged in he'll go to the main page
-        if(!(isset($_SESSION['id'])) || !(isset($_SESSION['name']))){
+        if((!(isset($_SESSION['id'])) || $_SESSION['id'] == '') || (!(isset($_SESSION['name'])) || $_SESSION['name'] = '' )){
             header('Location: /?login=erro');
         }
     }
