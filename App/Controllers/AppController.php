@@ -49,20 +49,22 @@ class AppController extends Action{
     public function who_follow(){
         $this->isLogged();
         $users = [];
-        $for = isset($_GET['name']) ? $_GET['name'] : '';
+        $user = Container::getModel('user');
+        $user->__set('id',$_SESSION['id']);
+        $this->view->searchFor = $user->getAllUsers();
+
+        $this->render('who_follow');
+    }
+    public function who_follow_search(){
+        $this->isLogged();
+        $for = isset($_POST['name']) ? $_POST['name'] : '';
         $user = Container::getModel('user');
         if($for != ''){
             $user->__set('name',$for);
             $user->__set('id',$_SESSION['id']);
             $users = $user->getAll(); //Get all users that corresponds with the string that was send
-            $this->view->searchFor = $users;
+            echo json_encode($users);
         }
-        if(!(isset($_GET['name'])) ||$_GET['name'] == '' ){
-            $user->__set('id',$_SESSION['id']);
-            $this->view->searchFor = $user->getAllUsers();
-        }
-
-        $this->render('who_follow');
     }
 
     public function action(){

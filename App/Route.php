@@ -47,6 +47,11 @@ class Route extends Bootstrap {
             'controller' => 'AppController',
             'action' => 'who_follow'
         );
+        $routes['who_follow_search']= array(
+        'route' => '/who_follow_search',
+        'controller' => 'AppController',
+        'action' => 'who_follow_search'
+        );
         $routes['action']= array(
             'route' => '/action',
             'controller' => 'AppController',

@@ -1,3 +1,4 @@
+<script src="js/search_user.js"></script>
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
@@ -13,7 +14,7 @@
 	</div>
 </nav>
 
-<div class="container mt-5">
+<div class="container mt-5" id=container>
 	<div class="row pt-2">
 		
 		<div class="col-md-3">
@@ -61,11 +62,11 @@
 				<div class="col">
 					<div class="card">
 						<div class="card-body">
-							<form action="/who_follow" method="get">
+							<form action="#"> <!-- action="/who_follow" -->
 								<div class="input-group mb-3">
-									<input type="text" class="form-control" placeholder="Quem você está procurando?" name="name">
+									<input type="text" class="form-control" placeholder="Quem você está procurando?" id="search_user">
 									<div class="input-group-append">
-										<button class="btn btn-primary" type="submit">Procurar</button>
+										<button class="btn btn-primary" type="button" id="btn_search_user">Procurar</button>
 									</div>
 								</div>
 							</form>
@@ -75,33 +76,36 @@
 			</div>
 
 			<!-- Results -->
-			<?php foreach($this->view->searchFor as $user){?>
-			<div class="row mb-2">
-				<div class="col">
-					<div class="card">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-6">
-									<?= $user->_name ?>
-								</div>
-							
-								<div class="col-md-6 d-flex justify-content-end">
-									<div>
-										<?php if($user->following_yn){ ?>
-										<a href="/action?action=unfollow&&id=<?= $user->id ?>" class="btn btn-danger">Deixar de seguir</a>
-										<?php }else{ ?>
-										<a href="/action?action=follow&&id=<?= $user->id ?>" class="btn btn-success">Seguir</a>
-										<?php } ?>
+	
+			<section id="user_searched">
+				<div class="row mb-2  user" >
+					<div class="col">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6" id="name">
+										
+									</div>
+								
+									<div class="col-md-6 d-flex justify-content-end">
+										<div>
+											
+											<a href="/action?action=unfollow&&id=" class="btn btn-danger" id="unfollow">Deixar de seguir</a>
+											
+											<a href="/action?action=follow&&id=" class="btn btn-success" id="follow">Seguir</a>
+											
 
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
+			
 
-			<?php } ?>
+			
 
 		</div>
 	</div>

@@ -118,7 +118,10 @@
                         us.id_user = :id AND us.id_user_followed = u.id
                 ) as following_yn
             FROM 
-                users as u";
+                users as u
+            WHERE
+            u.id <> :id  
+                ";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":id",$this->__get('id'));
             $stmt->execute();
