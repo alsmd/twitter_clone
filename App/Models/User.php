@@ -78,5 +78,14 @@
             }
            
         }
+        //Search for
+        public function getAll(){
+            $query = "SELECT _name FROM users WHERE _name LIKE :_name AND id <> :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(":_name",'%'.$this->__get('name').'%');
+            $stmt->bindValue(":id",$this->__get('id'));
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        }
     }
 ?>

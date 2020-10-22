@@ -28,8 +28,8 @@ class IndexController extends Action{
         $user = Container::getModel('User');
         $user->__set('name',$_POST['name']);
         $user->__set('email',$_POST['email']);
-        if($_POST['password'] != ''){
-            $user->__set('password',md5()); 
+        if(isset($_POST['password']) && $_POST['password'] != ''){
+            $user->__set('password',md5($_POST['password'])); 
         }
 
         //if the fields are correct

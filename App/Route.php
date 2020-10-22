@@ -42,6 +42,11 @@ class Route extends Bootstrap {
             'controller' => 'AppController',
             'action' => 'delete_tweet'
         );
+        $routes['who_follow']= array(
+            'route' => '/who_follow',
+            'controller' => 'AppController',
+            'action' => 'who_follow'
+        );
         // AuthController
         $routes['authenticate']= array(
             'route' => '/authenticate',

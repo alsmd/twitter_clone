@@ -29,7 +29,20 @@ class AppController extends Action{
         $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
         $tweet->save();
         header("Location: /timeline");
-    }   
+    } 
+    
+    public function who_follow(){
+        $this->isLogged();
+        $this->view->searchFor = [];
+        $for = isset($_GET['name']) ? $_GET['name'] : '';
+        if($for != ''){
+            $user = Container::getModel('user');
+            $user->__set('name',$for);
+            $user->__set('id',$_SESSION['id']);
+            $this->view->searchFor = $user->getAll(); //Get all users that corresponds with the string that was send
+        }
+        $this->render('who_follow');
+    }
 }
 
 ?>
