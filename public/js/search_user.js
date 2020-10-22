@@ -35,16 +35,16 @@ $(document).ready(()=>{
                 $(user_cont).find("#name").html(user._name); //set  user's name
                 //setting follow and unfollow button
                 if(user.following_yn == 1){
-                    $(user_cont).find("#follow").css('display','none'); //href=""
-                    $(user_cont).find("#unfollow").css('display','inline-block');
-                    $(user_cont).find("#unfollow").attr("href",`/action?action=unfollow&&id=${user.id}`)
+                    $(user_cont).find(".follow").css('display','none'); //href=""
+                    $(user_cont).find(".unfollow").css('display','inline-block');
                 }else if(user.following_yn == 0){
-                    $(user_cont).find("#unfollow").css('display','none');
-                    $(user_cont).find("#follow").css('display','inline-block');
-                    $(user_cont).find("#follow").attr("href",`/action?action=follow&&id=${user.id}`)
-
-
+                    $(user_cont).find(".unfollow").css('display','none');
+                    $(user_cont).find(".follow").css('display','inline-block');
                 }
+                //storing user's id to consult the bd
+                $(user_cont).find(".unfollow").attr("href",`/action?action=unfollow&&id=${user.id}`)
+                $(user_cont).find(".follow").attr("href",`/action?action=follow&&id=${user.id}`)
+
                 //getting the user's div formated
                 $user =$(user_cont).find(".row").html();
                 $user = `<div class= "row mb-2 user"> ${$user} </div>`;

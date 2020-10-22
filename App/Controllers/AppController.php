@@ -60,7 +60,7 @@ class AppController extends Action{
         if($_POST['action'] == "all"){
             $user = Container::getModel('user');
             $user->__set('id',$_SESSION['id']);
-            $users = $user->getAllUsers(); //Get all users that corresponds with the string that was send
+            $users = $user->getAllUsers(); 
             echo json_encode($users);
         }else if($_POST['action'] == 'only_searched'){
             $for = isset($_POST['name']) ? $_POST['name'] : '';
@@ -79,32 +79,30 @@ class AppController extends Action{
         $this->isLogged();
         $user = Container::getModel('UsersFollowers');
         $user->__set('id_user',$_SESSION['id']);
-        $action = isset($_GET['action']) ? $_GET['action']: '';
+        $action = isset($_POST['action']) ? $_POST['action']: '';
         //follow 
         if($action == 'follow'){
             
-            $user->__set('id_user_followed',$_GET['id']);
+            $user->__set('id_user_followed',$_POST['id']);
             $acess = $user->follow();
             if($acess == 1){ //follow success
-                header("Location: /who_follow?follow=true");
+                echo "follow=true";
             }
             if($acess == 'following'){ //user is alredy following
-                header("Location: /who_follow?follow=following");
+                echo "follow=following";
             }
         }
         //unfollow
         if($action == 'unfollow'){
             
-            $user->__set('id_user_followed',$_GET['id']);
+            $user->__set('id_user_followed',$_POST['id']);
             $acess = $user->unfollow();
             if($acess == 1){ //unfollow success
-                header("Location: /who_follow?unfollow=true");
+               echo "unfollow=true";
             }else{ //unfollow error
-                header("Location: /who_follow?unfollow=false");
+                echo "unfollow=false";
             }
         }
-        
-
     }
 
     
