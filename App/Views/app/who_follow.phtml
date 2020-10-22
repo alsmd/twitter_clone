@@ -75,7 +75,7 @@
 			</div>
 
 			<!-- Results -->
-			<?php foreach($this->view->searchFor as $user){ ?>
+			<?php foreach($this->view->searchFor as $user){?>
 			<div class="row mb-2">
 				<div class="col">
 					<div class="card">
@@ -87,8 +87,12 @@
 							
 								<div class="col-md-6 d-flex justify-content-end">
 									<div>
-										<a href="/action?action=follow&&id=<?= $user->id ?>" class="btn btn-success">Seguir</a>
+										<?php if($user->following_yn){ ?>
 										<a href="/action?action=unfollow&&id=<?= $user->id ?>" class="btn btn-danger">Deixar de seguir</a>
+										<?php }else{ ?>
+										<a href="/action?action=follow&&id=<?= $user->id ?>" class="btn btn-success">Seguir</a>
+										<?php } ?>
+
 									</div>
 								</div>
 							</div>

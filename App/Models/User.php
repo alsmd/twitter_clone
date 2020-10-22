@@ -81,9 +81,45 @@
         }
         //Search for
         public function getAll(){
-            $query = "SELECT _name,id,_email FROM users WHERE _name LIKE :_name AND id <> :id";
+            $query = "SELECT
+                u._name,
+                u.id,
+                u._email,
+                (
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        users_followers as us
+                    WHERE
+                        us.id_user = :id AND us.id_user_followed = u.id
+                ) as following_yn
+            FROM 
+                users as u
+            WHERE
+            u._name LIKE :_name AND u.id <> :id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":_name",'%'.$this->__get('name').'%');
+            $stmt->bindValue(":id",$this->__get('id'));
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        }
+        //Get all users
+        public function getAllUsers(){
+            $query = "SELECT
+                u._name,
+                u.id,
+                u._email,
+                (
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        users_followers as us
+                    WHERE
+                        us.id_user = :id AND us.id_user_followed = u.id
+                ) as following_yn
+            FROM 
+                users as u";
+            $stmt = $this->db->prepare($query);
             $stmt->bindValue(":id",$this->__get('id'));
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_OBJ);

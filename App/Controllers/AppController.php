@@ -44,8 +44,9 @@ class AppController extends Action{
             $users = $user->getAll(); //Get all users that corresponds with the string that was send
             $this->view->searchFor = $users;
         }
-        if(empty($users)){
-
+        if(!(isset($_GET['name'])) ||$_GET['name'] == '' ){
+            $user->__set('id',$_SESSION['id']);
+            $this->view->searchFor = $user->getAllUsers();
         }
 
         $this->render('who_follow');
