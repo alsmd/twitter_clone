@@ -7,6 +7,8 @@ use MF\Controller\Action;
 use MF\Model\Container;
 
 class AppController extends Action{
+    
+    
 
     public function isLogged(){
         //if the user isn't logged in he'll go to the main page
@@ -33,37 +35,49 @@ class AppController extends Action{
     
     public function who_follow(){
         $this->isLogged();
-        $this->view->searchFor = [];
+        $users = [];
         $for = isset($_GET['name']) ? $_GET['name'] : '';
+        $user = Container::getModel('user');
         if($for != ''){
-            $user = Container::getModel('user');
             $user->__set('name',$for);
             $user->__set('id',$_SESSION['id']);
-            $this->view->searchFor = $user->getAll(); //Get all users that corresponds with the string that was send
+            $users = $user->getAll(); //Get all users that corresponds with the string that was send
+            $this->view->searchFor = $users;
         }
+        if(empty($users)){
+
+        }
+
         $this->render('who_follow');
     }
 
     public function action(){
         $this->isLogged();
-        $user = Container::getModel('user');
-        $user->__set('id',$_SESSION['id']);
-        if(isset($_GET['action']) && $_GET['action'] == 'follow'){
-            //follow 
-            $user->__set('id_user_follow',$_GET['id']);
+        $user = Container::getModel('UsersFollowers');
+        $user->__set('id_user',$_SESSION['id']);
+        $action = isset($_GET['action']) ? $_GET['action']: '';
+        //follow 
+        if($action == 'follow'){
+            
+            $user->__set('id_user_followed',$_GET['id']);
             $acess = $user->follow();
             if($acess == 1){ //follow success
                 header("Location: /who_follow?follow=true");
-            }else{ //follow error
-                header("Location: /who_follow?follow=false");
             }
             if($acess == 'following'){ //user is alredy following
                 header("Location: /who_follow?follow=following");
             }
-        }else if(isset($_GET['action']) && $_GET['action'] == 'unfollow'){
-            //unfollow
-            $user->__set('id_user_follow',$_GET['id']);
-            $user->unfollow();
+        }
+        //unfollow
+        if($action == 'unfollow'){
+            
+            $user->__set('id_user_followed',$_GET['id']);
+            $acess = $user->unfollow();
+            if($acess == 1){ //unfollow success
+                header("Location: /who_follow?unfollow=true");
+            }else{ //unfollow error
+                header("Location: /who_follow?unfollow=false");
+            }
         }
         
 
