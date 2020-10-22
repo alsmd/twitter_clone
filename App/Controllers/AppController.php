@@ -57,14 +57,22 @@ class AppController extends Action{
     }
     public function who_follow_search(){
         $this->isLogged();
-        $for = isset($_POST['name']) ? $_POST['name'] : '';
-        $user = Container::getModel('user');
-        if($for != ''){
-            $user->__set('name',$for);
+        if($_POST['action'] == "all"){
+            $user = Container::getModel('user');
             $user->__set('id',$_SESSION['id']);
-            $users = $user->getAll(); //Get all users that corresponds with the string that was send
+            $users = $user->getAllUsers(); //Get all users that corresponds with the string that was send
             echo json_encode($users);
+        }else if($_POST['action'] == 'only_searched'){
+            $for = isset($_POST['name']) ? $_POST['name'] : '';
+            $user = Container::getModel('user');
+            if($for != ''){
+                $user->__set('name',$for);
+                $user->__set('id',$_SESSION['id']);
+                $users = $user->getAll(); //Get all users that corresponds with the string that was send
+                echo json_encode($users);
+            }
         }
+        
     }
 
     public function action(){

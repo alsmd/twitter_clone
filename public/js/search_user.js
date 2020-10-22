@@ -1,18 +1,18 @@
 
 $(document).ready(()=>{
-    //When the page load
-    
-    //Filter
+    //When the page load render de users
+    renderUsers('all');
+    // When Filter render the users with filter
     $("#btn_search_user").on("click",()=>{
+        renderUsers('only_searched');
+    })
+    function renderUsers(act){
         let $user = $("#search_user").val();
-        let name = $("#search_user").attr('name');
-        let $users_result;
-
         let res = $.ajax({
             type:'POST',
             url: '/who_follow_search',
 
-            data: `name=${$user}`,
+            data: `name=${$user}&action=${act}`,
             dataType: 'json',
             success: (e)=>{
 
@@ -30,7 +30,7 @@ $(document).ready(()=>{
             for(let i in users){
                 //get the users that correspond to the search
                 let user = users[i];
-                let user_cont =  new DOMParser().parseFromString(aux,'text/html');
+                let user_cont =  new DOMParser().parseFromString(aux,'text/html');// user's div in DOM to be easy edit
 
                 $(user_cont).find("#name").html(user._name); //set  user's name
                 //setting follow and unfollow button
@@ -41,6 +41,8 @@ $(document).ready(()=>{
                 }else if(user.following_yn == 0){
                     $(user_cont).find("#unfollow").css('display','none');
                     $(user_cont).find("#follow").css('display','inline-block');
+                    $(user_cont).find("#follow").attr("href",`/action?action=follow&&id=${user.id}`)
+
 
                 }
                 //getting the user's div formated
@@ -51,5 +53,5 @@ $(document).ready(()=>{
             }
             
         })
-    })
+    }
 })
