@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use MF\Controller\Action;
 use MF\Model\Container;
+use App\Connection;
 
 class AppController extends Action{
     
@@ -33,6 +34,18 @@ class AppController extends Action{
         header("Location: /timeline");
     } 
     
+    //delete tweet
+    public function delete_tweet(){
+        $this->isLogged();
+        if(!(isset($_POST['tweet_id']))) header('Location: /timeline');
+        $query = "DELETE FROM tweets WHERE id = :id and id_user = :id_user ";
+        $con = Connection::getDb();
+        $stmt = $con->prepare($query);
+        $stmt->bindValue(':id',$_POST['tweet_id']);
+        $stmt->bindValue(':id_user',$_SESSION['id']);
+        $stmt->execute();
+    }
+
     public function who_follow(){
         $this->isLogged();
         $users = [];
@@ -83,6 +96,8 @@ class AppController extends Action{
         
 
     }
+
+    
 }
 
 ?>

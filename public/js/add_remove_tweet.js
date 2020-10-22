@@ -14,7 +14,7 @@
             //and do a request to delete_tweet that will delete it from the db, just when the model "Yes" be clicked
             $.ajax({
                 type:'POST',
-                url:'php/delete_tweet.php',
+                url:'/delete_tweet',
                 data: 'tweet_id='+tweet_id,
                 success: (e)=>{
                     tweet.remove();
