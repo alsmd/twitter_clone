@@ -22,7 +22,7 @@ class AppController extends Action{
         //Getting all the tweets
         $tweet =  Container::getModel('tweet');
         $tweet->__set('id_user',$_SESSION['id']);
-        $this->view->tweets = $tweet->getAll();
+        $this->view->tweets = $tweet->getAll(7);
         $this->render('timeline');
     }
     public function tweet(){
@@ -31,7 +31,8 @@ class AppController extends Action{
         $tweet->__set("tweet",$_POST['tweet']);
         $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
         $tweet->save();
-        header("Location: /timeline");
+        $tweet = $tweet->getAll(1)[0]; 
+        echo json_encode($tweet); //return the tweet that was created
     } 
     
     //delete tweet

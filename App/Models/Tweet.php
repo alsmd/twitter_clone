@@ -6,8 +6,8 @@
     class Tweet extends Model{
         private $id;
         private $id_user;
-        private $tweet;
-        private $date;
+        public $tweet;
+        public $date;
 
         public function __get($attr){
             return $this->$attr;
@@ -25,7 +25,7 @@
                 $stmt->bindValue(":id_user",$this->__get('id_user'));
                 $stmt->bindValue(":tweet",$this->__get('tweet'));
                 $stmt->execute();
-                return $this;
+                return $stmt->rowCount();
             }catch(\PDOException $e){
                 echo $e->getMessage();
             }
@@ -33,7 +33,7 @@
 
         //get All
 
-        public function getAll(){
+        public function getAll($limit){
             $query = "SELECT
 
              t.id,t.id_user, t.tweet,u._name, DATE_FORMAT(t.date,'%d/%m/%Y %H:%i') as date
@@ -44,6 +44,8 @@
              t.id_user = :id_user
              ORDER BY
              t.date DESC
+             LIMIT
+             $limit
              ";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":id_user", $this->id_user);

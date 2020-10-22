@@ -1,4 +1,5 @@
-<script src="js/add_remove_tweet.js"></script>
+<script src="/src/js/remove_tweet.js"></script>
+<script src="/src/js/add_tweet.js"></script>
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
@@ -57,13 +58,13 @@
 		</div>
 
 		<div class="col-md-6" id="tweets">
-			<div class="row mb-2">
+			<div class="row mb-2 create-tweet-div">
 				<div class="col tweetBox">
 					<form method="post" action="/tweet">
-						<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="tweet"></textarea>
+						<textarea class="form-control" id="tweet" rows="3"></textarea>
 						
 						<div class="col mt-2 d-flex justify-content-end">
-							<button type="submit" class="btn btn-primary">Tweet</button>
+							<button type="button" class="btn btn-primary" id="create_tweet">Tweet</button>
 						</div>
 
 					</form>
@@ -74,8 +75,8 @@
 			<?php foreach($this->view->tweets AS $tweet){ ?>
 			<div class="row tweet">
 				<div class="col">
-					<p><strong><?=  $tweet->_name ?></strong> <span class="text text-muted">-<small> <?=  $tweet->date ?> </small> </span></p>
-					<p><?=  $tweet->tweet ?></p>
+					<p><strong><?=  $tweet->_name ?></strong> <span class="text text-muted">-<small class="tweet_data"> <?=  $tweet->date ?> </small> </span></p>
+					<p class="tweet_content"><?=  $tweet->tweet ?></p>
 
 					<br />
 					<form>
@@ -85,9 +86,23 @@
 					</form>
 				</div>
 			</div>
-
 			<?php } ?>
+			<!-- Model for ajax -->
+			<div id="_tweet" style="display:none;">
+				<div class="row tweet">
+					<div class="col">
+						<p><strong class="tweet_user_name"></strong> <span class="text text-muted">-<small class="tweet_data">  </small> </span></p>
+						<p class="tweet_content"></p>
 
+						<br />
+						<form>
+							<div class="col d-flex justify-content-end">
+								<button type="button" class="btn btn-danger button-remove" ><small>Remover</small></button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 
 
 
