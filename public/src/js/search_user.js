@@ -23,8 +23,8 @@ $(document).ready(()=>{
         })
 
         res.then((users)=>{
-            let aux = $("#user_searched").html();
-            $.each($(".user"), (i,v) =>{ //remove the users that are already render
+            let aux = $("#user_searched_model").html(); //get the model to create a user's div
+            $.each($("#results .user"), (i,v) =>{ //remove the users that are already render
                 v.remove(); 
             })
             for(let i in users){
@@ -46,10 +46,11 @@ $(document).ready(()=>{
                 $(user_cont).find(".follow").attr("href",`/action?action=follow&&id=${user.id}`)
 
                 //getting the user's div formated
-                $user =$(user_cont).find(".row").html();
-                $user = `<div class= "row mb-2 user"> ${$user} </div>`;
+                $user =$(user_cont).find("body").html();
+                $user = $user;
+                
                 //adding this div into the page
-                $("#user_searched").append($user);
+                $("#results").append($user);
             }
             
         })

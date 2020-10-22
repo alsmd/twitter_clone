@@ -71,6 +71,11 @@ class AppController extends Action{
                 $user->__set('id',$_SESSION['id']);
                 $users = $user->getAll(); //Get all users that corresponds with the string that was send
                 echo json_encode($users);
+            }else if($for == ''){
+                $user = Container::getModel('user');
+                $user->__set('id',$_SESSION['id']);
+                $users = $user->getAllUsers(); 
+                echo json_encode($users);
             }
         }
         
