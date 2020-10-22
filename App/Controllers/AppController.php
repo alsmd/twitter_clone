@@ -43,6 +43,31 @@ class AppController extends Action{
         }
         $this->render('who_follow');
     }
+
+    public function action(){
+        $this->isLogged();
+        $user = Container::getModel('user');
+        $user->__set('id',$_SESSION['id']);
+        if(isset($_GET['action']) && $_GET['action'] == 'follow'){
+            //follow 
+            $user->__set('id_user_follow',$_GET['id']);
+            $acess = $user->follow();
+            if($acess == 1){ //follow success
+                header("Location: /who_follow?follow=true");
+            }else{ //follow error
+                header("Location: /who_follow?follow=false");
+            }
+            if($acess == 'following'){ //user is alredy following
+                header("Location: /who_follow?follow=following");
+            }
+        }else if(isset($_GET['action']) && $_GET['action'] == 'unfollow'){
+            //unfollow
+            $user->__set('id_user_follow',$_GET['id']);
+            $user->unfollow();
+        }
+        
+
+    }
 }
 
 ?>

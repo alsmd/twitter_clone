@@ -5,6 +5,7 @@
     use MF\Model\Model;
     class User extends Model{
         private $id;
+        private $id_user_follow;
         private $name;
         private $email;
         private $password;
@@ -80,12 +81,41 @@
         }
         //Search for
         public function getAll(){
-            $query = "SELECT _name FROM users WHERE _name LIKE :_name AND id <> :id";
+            $query = "SELECT _name,id,_email FROM users WHERE _name LIKE :_name AND id <> :id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":_name",'%'.$this->__get('name').'%');
             $stmt->bindValue(":id",$this->__get('id'));
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
+        //follow
+        public function follow(){
+            try{
+                //check if this user is already following him
+                $query = "SELECT id FROM users_followers WHERE id_user = :id AND id_user_followed = :id_user_followed";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(":id",$this->__get("id"));
+                $stmt->bindValue(":id_user_followed",$this->__get("id_user_follow"));
+                $stmt->execute();
+                $acess =  $stmt->rowCount(); // if the returns is 1 it means that this user is already following
+                //if he is not following we will follow
+                if(!($acess)){
+                    $query = "INSERT INTO users_followers(id_user, id_user_followed)VALUES(:id, :id_user_followed)";
+                    $stmt = $this->db->prepare($query);
+                    $stmt->bindValue(":id",$this->__get("id"));
+                    $stmt->bindValue(":id_user_followed",$this->__get("id_user_follow"));
+                    $stmt->execute();
+                    return $stmt->rowCount();
+                }else{
+                    return 'following'; // else we'll warn that this users is already following
+                }
+                
+            }catch(\PDOException $e){
+                echo 'Erro follow : '. $e->getMessage();
+            }
+        }
+
+
+        //unfollow
     }
 ?>
