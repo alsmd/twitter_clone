@@ -81,7 +81,10 @@
 					<br />
 					<form>
 						<div class="col d-flex justify-content-end">
+							<?php if($tweet->id_user == $this->view->id){ ?>
 							<button type="button" class="btn btn-danger button-remove" id="<?=$tweet->id?>"><small>Remover</small></button>
+							<?php } ?>
+
 						</div>
 					</form>
 				</div>
@@ -97,6 +100,7 @@
 						<br />
 						<form>
 							<div class="col d-flex justify-content-end">
+
 								<button type="button" class="btn btn-danger button-remove" ><small>Remover</small></button>
 							</div>
 						</form>

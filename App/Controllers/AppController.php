@@ -19,6 +19,8 @@ class AppController extends Action{
     }
     public function timeline(){
         $this->isLogged();
+        //
+        $this->view->id = $_SESSION['id'];
         //Getting all the tweets
         $tweet =  Container::getModel('tweet');
         $tweet->__set('id_user',$_SESSION['id']);
