@@ -5,11 +5,12 @@ function renderPagTweets(e){
         v.remove();
     })
     let $totalPag = e.total_pag;
+    let $id_session = e.id_session;
     delete e.total_pag;
+    delete e.id_session;
 
     for(let i in e){
         let $user = e[i];
-
         let tweet_html = $("#_tweet").html();
         let tweet_dom =  new DOMParser().parseFromString(tweet_html,'text/html');
         $(tweet_dom).find(".tweet_data").html($user.date);
@@ -17,7 +18,9 @@ function renderPagTweets(e){
         $(tweet_dom).find(".button-remove").attr('id',$user.id);
         $(tweet_dom).find(".tweet").addClass('tweet-us');
         $(tweet_dom).find(".tweet_user_name").html($user._name);
-        
+        if($id_session != $user.id_user){// if this user is not logged in i remove the remove's button
+        $(tweet_dom).find(".button-remove").css('display','none');
+        }
         tweet_html = $(tweet_dom).find('body').html();
         $('#_tweet').before(tweet_html);
     }

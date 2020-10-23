@@ -44,6 +44,7 @@ class AppController extends Action{
         $total_pag = ceil($total_tweets / $total_per_pag);
         $tweets = $tweet->getPerPage($total_per_pag,$displacement);
         $tweets['total_pag'] = $total_pag;
+        $tweets['id_session'] = $_SESSION['id'];
         echo json_encode($tweets);
 
     }
