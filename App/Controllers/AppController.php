@@ -39,12 +39,10 @@ class AppController extends Action{
     public function delete_tweet(){
         $this->isLogged();
         if(!(isset($_POST['tweet_id']))) header('Location: /timeline');
-        $query = "DELETE FROM tweets WHERE id = :id and id_user = :id_user ";
-        $con = Connection::getDb();
-        $stmt = $con->prepare($query);
-        $stmt->bindValue(':id',$_POST['tweet_id']);
-        $stmt->bindValue(':id_user',$_SESSION['id']);
-        $stmt->execute();
+        $tweet = Container::getModel('tweet');
+        $tweet->__set("id",$_POST['tweet_id']);
+        $tweet->__set("id_user",$_SESSION['id']);
+        $tweet->remove();
     }
 
     public function who_follow(){

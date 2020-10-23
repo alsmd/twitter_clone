@@ -1,6 +1,7 @@
 $(document).ready(()=>{
     $("#create_tweet").on("click",()=>{
         let $tweet = $("#tweet").val();
+        $("#tweet").val('');
         $("#_tweet").val('');
         $.ajax({
             type:'POST',
