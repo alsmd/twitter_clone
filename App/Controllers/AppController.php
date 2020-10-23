@@ -19,8 +19,10 @@ class AppController extends Action{
     }
     public function timeline(){
         $this->isLogged();
-        //
-        $this->view->id = $_SESSION['id'];
+        //get all use's informations
+        $perfil =  Container::getModel('perfil');
+        $this->view->perfil = $perfil;
+
         //Getting all the tweets
         $tweet =  Container::getModel('tweet');
         $tweet->__set('id_user',$_SESSION['id']);
@@ -49,6 +51,9 @@ class AppController extends Action{
 
     public function who_follow(){
         $this->isLogged();
+        //get all use's informations
+        $perfil =  Container::getModel('perfil');
+        $this->view->perfil = $perfil;
         $users = [];
         $user = Container::getModel('user');
         $user->__set('id',$_SESSION['id']);

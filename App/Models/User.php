@@ -9,6 +9,7 @@
         private $name;
         private $email;
         private $password;
+        private $execute = false;
 
         public function __get($attr){
             return $this->$attr;

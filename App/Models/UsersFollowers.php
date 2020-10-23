@@ -8,6 +8,7 @@
         private $id;
         private $id_user;
         private $id_user_followed;
+        private $execute = false;
 
 
         public function __get($attr){

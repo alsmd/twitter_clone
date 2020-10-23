@@ -8,7 +8,7 @@
         private $id_user;
         public $tweet;
         public $date;
-
+        private $execute = false;
         public function __get($attr){
             return $this->$attr;
         }
