@@ -1,5 +1,7 @@
 <script src="/src/js/remove_tweet.js"></script>
-<script src="/src/js/add_tweet.js"></script>
+<script src="/src/js/show_pag_tweet.js"></script>
+<script src="/src/js/change_pag.js"></script>
+<script src="/src/js/add_new_tweet.js"></script>
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
@@ -61,7 +63,7 @@
 			<div class="row mb-2 create-tweet-div">
 				<div class="col tweetBox">
 					<form method="post" action="/tweet">
-						<textarea class="form-control" id="tweet" rows="3"></textarea>
+						<textarea class="form-control" id="tweet_content" rows="3"></textarea>
 						
 						<div class="col mt-2 d-flex justify-content-end">
 							<button type="button" class="btn btn-primary" id="create_tweet">Tweet</button>
@@ -72,44 +74,7 @@
 			</div>
 
 			<!-- LISTING ALL TWEETS -->
-			<?php foreach($this->view->tweets AS $tweet){ ?>
-			<div class="row tweet">
-				<div class="col">
-					<p><strong><?=  $tweet->_name ?></strong> <span class="text text-muted">-<small class="tweet_data"> <?=  $tweet->date ?> </small> </span></p>
-					<p class="tweet_content"><?=  $tweet->tweet ?></p>
-
-					<br />
-					<form>
-						<div class="col d-flex justify-content-end">
-							<?php if($tweet->id_user == $this->view->perfil->__get('id')){ ?>
-							<button type="button" class="btn btn-danger button-remove" id="<?=$tweet->id?>"><small>Remover</small></button>
-							<?php } ?>
-
-						</div>
-					</form>
-				</div>
-			</div>
-			<?php } ?>
-
-
-			<!-- Pagination -->
-			<div class="row mb-2 mt-4">
-				<nav aria-label="...">
-				<ul class="pagination">
-					<li class="page-item">
-					<a class="page-link" href="?pag=1" tabindex="-1">First</a>
-					</li>
-					<!-- Select the button that correspond to the current page -->
-					<?php for($i = 1; $i <= $this->view->total_pag; $i++ ){ ?>
-					<li class="page-item <?php if($_GET[pag] == $i || (!(isset($_GET[pag])) && $i == 1) ) echo active; ?>"><a class="page-link" href="?pag=<?=$i?>"><?=$i?></a></li>
-					<?php } ?>
-
-					<li class="page-item">
-					<a class="page-link" href="?pag=<?= $this->view->total_pag ?>">Last</a>
-					</li>
-				</ul>
-				</nav>
-			</div>
+			
 
 
 			<!-- Model for ajax -->
@@ -130,7 +95,23 @@
 				</div>
 			</div>
 
-			
+			<!-- pagination menus's button -->
+			<div class="row">
+			<nav aria-label="...">
+			<ul class="pagination">
+				<li class="page-item first">
+				<a class="page-link" href="?pag=1" tabindex="-1">First</a>
+				</li>
+
+				
+
+				<li class="page-item last">
+				<a class="page-link" href="">Last</a>
+				</li>
+			</ul>
+			</nav>
+
+			</div>
 
 		</div>
 		

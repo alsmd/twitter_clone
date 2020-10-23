@@ -31,10 +31,10 @@ class Route extends Bootstrap {
             'controller' => 'AppController',
             'action' => 'timeline'
         );
-        $routes['tweet']= array(
-            'route' => '/tweet',
+        $routes['tweetsPags']= array(
+            'route' => '/tweetsPags',
             'controller' => 'AppController',
-            'action' => 'tweet'
+            'action' => 'tweetsPags'
         );
         
         $routes['delete_tweet']= array(

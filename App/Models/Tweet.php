@@ -51,7 +51,7 @@
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":id_user", $this->id_user);
             $stmt->execute();
-            return $stmt->fetchAll(\PDO::FETCH_OBJ);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
         public function getTotalTweets(){

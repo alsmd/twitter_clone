@@ -22,30 +22,32 @@ class AppController extends Action{
         //get all use's informations
         $perfil =  Container::getModel('perfil');
         $this->view->perfil = $perfil;
-        //Model that will be used
+        //Getting all the tweets
+        $this->render('timeline');
+    }
+    public function tweetsPags(){
+        $this->isLogged();
         $tweet =  Container::getModel('tweet');
         $tweet->__set('id_user',$_SESSION['id']);
+        $pag = isset($_POST['pag']) ? $_POST['pag'] : 0;
+        //saving new tweet
+        if(isset($_POST['tweet']) && $_POST['tweet'] != ''){
+            $tweet->__set("tweet",$_POST['tweet']);
+            $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
+            $tweet->save();
+        }
         //pagination's variables
-        $pag = isset($_GET['pag']) ? $_GET['pag'] : 0;
-        if($pag != 0) $pag -= 1;
+        if($pag != 0) $pag -= 1; //current page
         $total_tweets = $tweet->getTotalTweets()->total;
         $total_per_pag = 5;
         $displacement = $pag * $total_per_pag;
-        $this->view->total_pag = ceil($total_tweets / $total_per_pag);
+        $total_pag = ceil($total_tweets / $total_per_pag);
+        $tweets = $tweet->getPerPage($total_per_pag,$displacement);
+        $tweets['total_pag'] = $total_pag;
+        echo json_encode($tweets);
 
-        //Getting all the tweets
-        $this->view->tweets = $tweet->getPerPage($total_per_pag,$displacement);
-        $this->render('timeline');
     }
-    public function tweet(){
-        $this->isLogged();
-        $tweet = Container::getModel('tweet');
-        $tweet->__set("tweet",$_POST['tweet']);
-        $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
-        $tweet->save();
-        $tweet = $tweet->getPerPage(1,0)[0]; 
-        echo json_encode($tweet); //return the tweet that was created
-    } 
+
     
     //delete tweet
     public function delete_tweet(){
