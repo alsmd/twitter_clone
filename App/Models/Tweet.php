@@ -33,7 +33,7 @@
 
         //get All
 
-        public function getAll($limit){
+        public function getPerPage($limit,$offset){
             $query = "SELECT
 
              t.id,t.id_user, t.tweet,u._name, DATE_FORMAT(t.date,'%d/%m/%Y %H:%i') as date
@@ -46,14 +46,32 @@
              ORDER BY
              t.date DESC
              LIMIT
-             $limit
+             $offset,$limit
              ";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":id_user", $this->id_user);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
-        
+
+        public function getTotalTweets(){
+            $query = "SELECT
+
+             COUNT(*) as total
+
+             FROM 
+             tweets as t LEFT JOIN users as u ON(t.id_user = u.id)
+             WHERE
+             t.id_user = :id_user
+             or t.id_user IN(SELECT id_user_followed from users_followers where id_user = :id_user)
+            ";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(":id_user", $this->id_user);
+            $stmt->execute();
+            return $stmt->fetch(\PDO::FETCH_OBJ);
+           
+        }
         public function remove(){
             try{
                 $query = "DELETE FROM tweets WHERE id = :id and id_user = :id_user ";

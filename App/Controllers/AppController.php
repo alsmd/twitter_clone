@@ -22,11 +22,19 @@ class AppController extends Action{
         //get all use's informations
         $perfil =  Container::getModel('perfil');
         $this->view->perfil = $perfil;
-
-        //Getting all the tweets
+        //Model that will be used
         $tweet =  Container::getModel('tweet');
         $tweet->__set('id_user',$_SESSION['id']);
-        $this->view->tweets = $tweet->getAll(7);
+        //pagination's variables
+        $pag = isset($_GET['pag']) ? $_GET['pag'] : 0;
+        if($pag != 0) $pag -= 1;
+        $total_tweets = $tweet->getTotalTweets()->total;
+        $total_per_pag = 5;
+        $displacement = $pag * $total_per_pag;
+        $this->view->total_pag = ceil($total_tweets / $total_per_pag);
+
+        //Getting all the tweets
+        $this->view->tweets = $tweet->getPerPage($total_per_pag,$displacement);
         $this->render('timeline');
     }
     public function tweet(){
@@ -35,7 +43,7 @@ class AppController extends Action{
         $tweet->__set("tweet",$_POST['tweet']);
         $tweet->__set("id_user",$_SESSION['id']); //Using the id of the user who is logged in to add a new tweet linked to him in the database
         $tweet->save();
-        $tweet = $tweet->getAll(1)[0]; 
+        $tweet = $tweet->getPerPage(1,0)[0]; 
         echo json_encode($tweet); //return the tweet that was created
     } 
     

@@ -90,6 +90,28 @@
 				</div>
 			</div>
 			<?php } ?>
+
+
+			<!-- Pagination -->
+			<div class="row mb-2 mt-4">
+				<nav aria-label="...">
+				<ul class="pagination">
+					<li class="page-item">
+					<a class="page-link" href="?pag=1" tabindex="-1">First</a>
+					</li>
+					<!-- Select the button that correspond to the current page -->
+					<?php for($i = 1; $i <= $this->view->total_pag; $i++ ){ ?>
+					<li class="page-item <?php if($_GET[pag] == $i || (!(isset($_GET[pag])) && $i == 1) ) echo active; ?>"><a class="page-link" href="?pag=<?=$i?>"><?=$i?></a></li>
+					<?php } ?>
+
+					<li class="page-item">
+					<a class="page-link" href="?pag=<?= $this->view->total_pag ?>">Last</a>
+					</li>
+				</ul>
+				</nav>
+			</div>
+
+
 			<!-- Model for ajax -->
 			<div id="_tweet" style="display:none;">
 				<div class="row tweet">
@@ -108,9 +130,11 @@
 				</div>
 			</div>
 
-
+			
 
 		</div>
+		
+
 
 
 		<div class="col-md-3">
