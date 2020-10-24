@@ -13,10 +13,15 @@ function renderPagTweets(e){
         let $user = e[i];
         let tweet_html = $("#_tweet").html();
         let tweet_dom =  new DOMParser().parseFromString(tweet_html,'text/html');
+        let src_photo = 'src/img/users/profile_photo/'+ $user.id_user;
         $(tweet_dom).find(".tweet_data").html($user.date);
         $(tweet_dom).find(".tweet_content").html($user.tweet);
         $(tweet_dom).find(".button-remove").attr('id',$user.id);
         $(tweet_dom).find(".tweet").addClass('tweet-us');
+        if($user.img == 1){ // render the img just if the user has one
+            $(tweet_dom).find(".tweet-photo").attr('src',src_photo );
+        }
+
         $(tweet_dom).find(".tweet_user_name").html($user._name);
         if($id_session != $user.id_user){// if this user is not logged in i remove the remove's button
         $(tweet_dom).find(".button-remove").css('display','none');

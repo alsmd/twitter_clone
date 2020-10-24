@@ -24,9 +24,15 @@
 
 			<div class="perfil">
 				<div class="perfilTopo">
-
+					<img src="src/img/users/profile_photo/<?php if($this->view->perfil->img == 1){ echo $_SESSION['id'];}else{echo 'padrao';}?>" alt="photo" width="80px" height="90%" style="border-radius:10px;">
 				</div>
-
+				<form enctype="multipart/form-data" action="/photo_perfil" method="POST">
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" id="customFile" name='img'>
+						<label class="custom-file-label" for="customFile">Change photo</label>
+					</div>
+					<button class="btn btn-info d-block w-100" type="submit">Trocar</button>
+				</form>
 				<div class="perfilPainel">
 					
 					<div class="row mt-2 mb-2">
@@ -81,7 +87,8 @@
 			<div id="_tweet" style="display:none;">
 				<div class="row tweet">
 					<div class="col">
-						<p><strong class="tweet_user_name"></strong> <span class="text text-muted">-<small class="tweet_data">  </small> </span></p>
+						<img src="src/img/users/profile_photo/padrao" alt="photo" class="tweet-photo" width="50px"> 
+						<p class="d-inline-block"><strong class="tweet_user_name"></strong> <span class="text text-muted">-<small class="tweet_data">  </small> </span></p>
 						<p class="tweet_content"></p>
 
 						<br />
@@ -100,13 +107,13 @@
 			<nav aria-label="...">
 			<ul class="pagination">
 				<li class="page-item first">
-				<a class="page-link" href="" tabindex="-1">First</a>
+				<a class="page-link" href="#" tabindex="-1">First</a>
 				</li>
 
 				
 
 				<li class="page-item last">
-				<a class="page-link" href="">Last</a>
+				<a class="page-link" href="#">Last</a>
 				</li>
 			</ul>
 			</nav>

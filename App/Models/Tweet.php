@@ -36,7 +36,7 @@
         public function getPerPage($limit,$offset){
             $query = "SELECT
 
-             t.id,t.id_user, t.tweet,u._name, DATE_FORMAT(t.date,'%d/%m/%Y %H:%i') as date
+             t.id,t.id_user, t.tweet,u._name, DATE_FORMAT(t.date,'%d/%m/%Y %H:%i') as date, u.img
 
              FROM 
              tweets as t LEFT JOIN users as u ON(t.id_user = u.id)

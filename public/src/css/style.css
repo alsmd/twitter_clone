@@ -184,3 +184,8 @@ h2 {
 .tweet:hover {
     background-color: #f5f8fa;
 }
+.perfilTopo{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

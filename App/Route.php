@@ -31,6 +31,11 @@ class Route extends Bootstrap {
             'controller' => 'AppController',
             'action' => 'timeline'
         );
+        $routes['photo_perfil']= array(
+            'route' => '/photo_perfil',
+            'controller' => 'AppController',
+            'action' => 'photo_perfil'
+        );
         $routes['tweetsPags']= array(
             'route' => '/tweetsPags',
             'controller' => 'AppController',

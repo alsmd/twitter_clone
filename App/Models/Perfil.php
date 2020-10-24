@@ -6,6 +6,7 @@
     class Perfil extends Model{
         private $id;
         public $name;
+        public $img;
         public $total_tweets;
         public $total_following;
         public $total_followers;
@@ -27,12 +28,13 @@
         }
         //Get informatins about the user
         public function getInformations(){
-            $query = "SELECT _name from users WHERE id = :id";
+            $query = "SELECT _name,img from users WHERE id = :id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(":id",$this->__get('id'));
             $stmt->execute();
             $return = $stmt->fetch(\PDO::FETCH_OBJ);
             $this->__set("name",$return->_name);
+            $this->__set("img",$return->img);
         }
         //Total of people that are following him
         public function getTotalFollowers(){
@@ -78,6 +80,13 @@
             $stmt->bindValue(":id",$this->__get('id'));
             $stmt->execute();
             $this->__set("total_tweets",$stmt->fetch(\PDO::FETCH_OBJ)->total);
+        }
+
+        public function setImg(){
+            $query = "UPDATE users SET img = 1 WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id',$this->__get('id'));
+            $stmt->execute();
         }
     }
 

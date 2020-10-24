@@ -25,6 +25,29 @@ class AppController extends Action{
         //Getting all the tweets
         $this->render('timeline');
     }
+    public function photo_perfil(){
+        $this->isLogged();
+        $perfil = Container::getModel('perfil');
+        //folder
+        $dir = './src/img/users/profile_photo/';
+        //extentions
+        $ext = ['jpg','png','gif'];
+        //information about the file
+        $f_name = $_FILES['img']['name'];
+        $f_tmp  = $_FILES['img']['tmp_name'];
+        $f_type = $_FILES['img']['type'];
+        //user's ID
+        $id = $_SESSION['id'];
+        //verificating if the field is a file
+        if($id != '' && is_file($f_tmp)){
+            @unlink($dir. $id);
+            $save == move_uploaded_file($f_tmp,$dir . $id); // keep the user's photo with the user's id like its name
+            if($save){
+                $perfil->setImg(); //keep in the db if the user has a photo or not, if he doesn't have one we'll show a standard photo
+            }
+        }
+        header('Location: /timeline');
+    }
     public function tweetsPags(){
         $this->isLogged();
         $tweet =  Container::getModel('tweet');

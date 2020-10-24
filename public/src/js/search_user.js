@@ -31,8 +31,13 @@ $(document).ready(()=>{
                 //get the users that correspond to the search
                 let user = users[i];
                 let user_cont =  new DOMParser().parseFromString(aux,'text/html');// user's div in DOM to be easy edit
+                let src_photo = 'src/img/users/profile_photo/' + user.id; //where the photos are
 
                 $(user_cont).find("#name").html(user._name); //set  user's name
+                if(user.img == 1){ // if the user has a img
+                    $(user_cont).find(".search-photo").attr('src',src_photo); //set  user's photo
+                }
+
                 //setting follow and unfollow button
                 if(user.following_yn == 1){
                     $(user_cont).find(".follow").css('display','none'); //href=""

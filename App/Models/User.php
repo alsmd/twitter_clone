@@ -86,6 +86,7 @@
                 u._name,
                 u.id,
                 u._email,
+                u.img,
                 (
                     SELECT
                         COUNT(*)
@@ -110,6 +111,7 @@
                 u._name,
                 u.id,
                 u._email,
+                u.img,
                 (
                     SELECT
                         COUNT(*)

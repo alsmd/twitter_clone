@@ -22,6 +22,7 @@
 
 			<div class="perfil">
 				<div class="perfilTopo">
+				<img src="src/img/users/profile_photo/<?php if($this->view->perfil->img == 1){ echo $_SESSION['id'];}else{echo 'padrao';}?>" alt="photo" width="80px" height="90%" style="border-radius:10px;">
 
 				</div>
 
@@ -84,7 +85,8 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-md-6" id="name">
+
+									<div class="col-md-6 d-inline-block" id="name">
 										
 									</div>
 								
@@ -111,9 +113,14 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-md-6" id="name">
+									<div class="col-md-6">
+									<img src="src/img/users/profile_photo/padrao" alt="photo" class="search-photo" width="50px" height="50px"> 
+
+									<div class="col-md-6 d-inline-block" id="name">
 										
 									</div>
+									</div>
+									
 								
 									<div class="col-md-6 d-flex justify-content-end">
 										<div>
